@@ -1,2 +1,2 @@
-# ghactions-lab
+# GitHub Actions Lab
 GitHub Actions Lab
