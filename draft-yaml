@@ -1,0 +1,24 @@
+             # - name: Deploy via SSH
+              #   uses: easingthemes/ssh-deploy@main
+              #   env:
+              #     SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+              #     REMOTE_HOST: ${{ secrets.HOST_DNS }}
+              #     REMOTE_USER: ${{ secrets.USERNAME }}
+              #     TARGET: ${{ secrets.TARGET_DIR }}
+
+              # - name: Build and Deploy
+              #   run: |
+              #     npm run build
+              #     npm run deploy
+              #   # Add commands to deploy your application here (e.g., using SSH, FTP, or other deployment methods)
+
+              # - name: Deploy to AWS
+              #   uses: easingthemes/ssh-deploy@v2.0.1
+              #   with:
+              #     server: ${{ secrets.SERVER }}
+              #     remote_port: ${{ secrets.REMOTE_PORT }}
+              #     remote_user: ${{ secrets.REMOTE_USER }}
+              #     remote_key: ${{ secrets.REMOTE_KEY }}
+              #     local_path: '.'
+              #     remote_path: ${{ secrets.REMOTE_PATH }}
+              #     args: '-o StrictHostKeyChecking=no'
