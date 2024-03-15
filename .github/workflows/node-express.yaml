@@ -1,47 +1,55 @@
-name: CI
+name: Express Node JS Server - CI/CD
 
 on:
   push:
-    branches: [ main ]  # Update this to match your default branch name
-  pull_request:
-    branches: [ main ]  # Update this to match your default branch name
-  workflow_dispatch:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/main'  # Update this to match your default branch name
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    strategy:
-      matrix:
-        node-version: [20.x]
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Test
+      run: npm run test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
+    - name: Install dependencies
+      run: npm install --production
 
-      - name: Build
-        run: npm run build
-
-      - name: Test
-        run: npm run test
-
-      - name: Deploy via rsync
-        uses: burnett01/rsync-deployments@5.1
-        with:
-          switches: -avzr --delete
-          path: ./*  # Update this to match your build output directory
-          remote_path: "${{ secrets.TARGET_DIR }}"
-          remote_host: "${{ secrets.HOST_DNS }}"
-          remote_user: "${{ secrets.USERNAME }}"
-          remote_key: "${{ secrets.EC2_SSH_KEY }}"
+    - name: Deploy via rsync
+      uses: burnett01/rsync-deployments@5.1
+      with:
+        switches: -avzr --delete
+        path: ./*
+        remote_path: "${{ secrets.TARGET_DIR }}"
+        remote_host: "${{ secrets.HOST_DNS }}"
+        remote_user: "${{ secrets.USERNAME }}"
+        remote_key: "${{ secrets.EC2_SSH_KEY }}"
