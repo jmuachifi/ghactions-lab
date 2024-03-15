@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   build:
@@ -13,11 +14,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Add debug logs to check the current directory and list files
-    - name: Debug Logs
-      run: |
-        pwd
-        ls -la
+    - name: Navigate to app directory
+      run: cd myapp
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -41,11 +39,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Add debug logs to check the current directory and list files
-    - name: Debug Logs
-      run: |
-        pwd
-        ls -la
+    - name: Navigate to app directory
+      run: cd myapp
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
