@@ -1,4 +1,4 @@
-name: Express Node JS Server - CI/CD
+name: Express Node JS Server - CI/CD 2024
 
 on:
   push:
